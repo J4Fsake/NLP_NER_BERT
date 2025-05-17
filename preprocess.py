@@ -1,16 +1,11 @@
 import sys
 
-from transformers import AutoTokenizer
-
+from pyvi import ViTokenizer
 
 dataset = sys.argv[1]
-model_name_or_path = sys.argv[2]
-max_len = int(sys.argv[3])
+max_len = int(sys.argv[2])
 
 subword_len_counter = 0
-
-tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
-max_len -= tokenizer.num_special_tokens_to_add()
 
 with open(dataset, encoding='utf-8') as f_p:
     for line in f_p:
@@ -23,7 +18,7 @@ with open(dataset, encoding='utf-8') as f_p:
 
         token = line.split()[0]
 
-        current_subwords_len = len(tokenizer.tokenize(token))
+        current_subwords_len = len(ViTokenizer.tokenize(token).split())
 
         # Token contains strange control characters like \x96 or \x95
         # Just filter out the complete line
