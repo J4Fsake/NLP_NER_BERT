@@ -19,6 +19,7 @@ import os
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional, Union
+from pyvi import ViTokenizer
 
 from filelock import FileLock
 
@@ -109,7 +110,7 @@ class TokenClassificationTask:
             tokens = []
             label_ids = []
             for word, label in zip(example.words, example.labels):
-                word_tokens = tokenize_sentence(word)
+                word_tokens = ViTokenizer.tokenize(word).split()
 
                 # google-bert/bert-base-multilingual-cased sometimes output "nothing ([]) when calling tokenize with just a space.
                 if len(word_tokens) > 0:
@@ -200,23 +201,6 @@ class TokenClassificationTask:
                 )
             )
         return features
-    
-from pyvi import ViTokenizer
-
-def tokenize_sentence(sentence):
-    tokenized_str = ViTokenizer.tokenize(sentence)
-    
-    final_tokens = []
-
-    for token in tokenized_str.split():
-        if '_' in token:
-            words = token.split('_')
-            final_tokens.extend(words)
-        else:
-            final_tokens.append(token)
-
-    return final_tokens
-
 
 if is_torch_available():
     import torch
