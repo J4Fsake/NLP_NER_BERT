@@ -42,7 +42,7 @@ from transformers.trainer_utils import is_main_process
 
 
 logger = logging.getLogger(__name__)
-
+logger.setLevel(logging.INFO) 
 
 @dataclass
 class ModelArguments:
