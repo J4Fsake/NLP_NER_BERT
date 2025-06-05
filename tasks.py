@@ -7,6 +7,7 @@ from utils_ner import InputExample, Split, TokenClassificationTask
 
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO) 
 
 
 class NER(TokenClassificationTask):
