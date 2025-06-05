@@ -26,6 +26,7 @@ from transformers import PreTrainedTokenizer, is_tf_available, is_torch_availabl
 
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO) 
 
 
 @dataclass
